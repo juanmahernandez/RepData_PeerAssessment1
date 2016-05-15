@@ -1,6 +1,7 @@
 # Reproducible Research: Peer Assessment 1
 
 
+
 ```
 ## Warning: package 'ggplot2' was built under R version 3.2.4
 ```
@@ -43,7 +44,8 @@ The dataset is stored in a comma-separated-value (CSV) file and there are a tota
 
     
     ```r
-    barplot(stepsPerDay$steps, names.arg = stepsPerDay$date, xlab = "Date", ylab = "Steps", col = "orange")
+    barplot(stepsPerDay$steps, names.arg = stepsPerDay$date, xlab = "Date"
+            , ylab = "Steps", col = "orange")
     ```
     
     ![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
@@ -78,7 +80,8 @@ The dataset is stored in a comma-separated-value (CSV) file and there are a tota
 
     
     ```r
-    stepsPerInterval <- aggregate(steps ~ interval, data=activity, mean, na.rm=TRUE)
+    stepsPerInterval <- aggregate(steps ~ interval, data=activity, mean
+                                  , na.rm=TRUE)
     plot(stepsPerInterval, type = "l", col = "orange")
     ```
     
@@ -116,7 +119,8 @@ Note that there are a number of days/intervals where there are missing values (c
     - Now that we have the mean for each interval, we are going to use the variable *stepsPerInterval*
     
     ```r
-    stepsPerInterval <- aggregate(steps ~ interval, data=activity, mean, na.rm=TRUE)
+    stepsPerInterval <- aggregate(steps ~ interval, data=activity, mean
+                                  , na.rm=TRUE)
     activity.Merge <- merge(activity, stepsPerInterval, by = "interval")
     
     cond.IsNa <- is.na(activity.Merge$steps.x)
@@ -128,7 +132,9 @@ Note that there are a number of days/intervals where there are missing values (c
 
     
     ```r
-    activity.noNA <- data.frame(steps = activity.Merge$steps.x, date = activity.Merge$date, interval = activity.Merge$interval)
+    activity.noNA <- data.frame(steps = activity.Merge$steps.x
+                                , date = activity.Merge$date
+                                , interval = activity.Merge$interval)
     ```
 
 
@@ -138,11 +144,16 @@ Note that there are a number of days/intervals where there are missing values (c
     ```r
     par(mfrow = c(1,2))
     
-    barplot(stepsPerDay$steps, names.arg = stepsPerDay$date, xlab = "Date", ylab = "Steps", col = "orange", main = "Activities with NAs values")
+    barplot(stepsPerDay$steps, names.arg = stepsPerDay$date, xlab = "Date"
+            , ylab = "Steps", col = "orange"
+            , main = "Activities with NA values")
     
-    stepsPerDay.noNA <- aggregate(steps ~ date, data = activity.noNA, sum, na.rm = TRUE)
+    stepsPerDay.noNA <- aggregate(steps ~ date, data = activity.noNA, sum
+                                  , na.rm = TRUE)
     stepsPerDay.noNA$date <- as.Date(stepsPerDay.noNA$date)
-    barplot(stepsPerDay.noNA$steps, names.arg = stepsPerDay.noNA$date, xlab = "Date", ylab = "Steps", col = "orange", main = "Activities w/o NAs values")
+    barplot(stepsPerDay.noNA$steps, names.arg = stepsPerDay.noNA$date
+            , xlab = "Date", ylab = "Steps"
+            , col = "orange", main = "Activities w/o NA values")
     ```
     
     ![](PA1_template_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
@@ -190,8 +201,12 @@ Note that there are a number of days/intervals where there are missing values (c
 
     
     ```r
-    stepsPerInterval.wkd <- aggregate(steps ~ interval + type, data = activity.wkd, mean, na.rm=TRUE)
-    qplot(interval, steps, data = stepsPerInterval.wkd, facets = type ~ ., geom = "line", color = type)
+    stepsPerInterval.wkd <- aggregate(steps ~ interval + type
+                                      , data = activity.wkd
+                                      , mean
+                                      , na.rm=TRUE)
+    qplot(interval, steps, data = stepsPerInterval.wkd
+          , facets = type ~ ., geom = "line", color = type)
     ```
     
     ![](PA1_template_files/figure-html/unnamed-chunk-16-1.png)<!-- -->

@@ -1,3 +1,4 @@
+
 ---
 title: "Reproducible Research: Peer Assessment 1"
 output: 
@@ -44,7 +45,8 @@ The dataset is stored in a comma-separated-value (CSV) file and there are a tota
 1. Make a histogram of the total number of steps taken each day
 
     ```{r}
-    barplot(stepsPerDay$steps, names.arg = stepsPerDay$date, xlab = "Date", ylab = "Steps", col = "orange")
+    barplot(stepsPerDay$steps, names.arg = stepsPerDay$date, xlab = "Date"
+            , ylab = "Steps", col = "orange")
     ```
 
 
@@ -66,7 +68,8 @@ The dataset is stored in a comma-separated-value (CSV) file and there are a tota
 1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
     ```{r}
-    stepsPerInterval <- aggregate(steps ~ interval, data=activity, mean, na.rm=TRUE)
+    stepsPerInterval <- aggregate(steps ~ interval, data=activity, mean
+                                  , na.rm=TRUE)
     plot(stepsPerInterval, type = "l", col = "orange")
     ```
 
@@ -90,7 +93,8 @@ Note that there are a number of days/intervals where there are missing values (c
 
     - Now that we have the mean for each interval, we are going to use the variable *stepsPerInterval*
     ```{r}
-    stepsPerInterval <- aggregate(steps ~ interval, data=activity, mean, na.rm=TRUE)
+    stepsPerInterval <- aggregate(steps ~ interval, data=activity, mean
+                                  , na.rm=TRUE)
     activity.Merge <- merge(activity, stepsPerInterval, by = "interval")
     
     cond.IsNa <- is.na(activity.Merge$steps.x)
@@ -101,7 +105,9 @@ Note that there are a number of days/intervals where there are missing values (c
 3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
     ```{r}
-    activity.noNA <- data.frame(steps = activity.Merge$steps.x, date = activity.Merge$date, interval = activity.Merge$interval)
+    activity.noNA <- data.frame(steps = activity.Merge$steps.x
+                                , date = activity.Merge$date
+                                , interval = activity.Merge$interval)
     ```
 
 
@@ -110,11 +116,16 @@ Note that there are a number of days/intervals where there are missing values (c
     ```{r  fig.width = 10, fig.height = 5}
     par(mfrow = c(1,2))
     
-    barplot(stepsPerDay$steps, names.arg = stepsPerDay$date, xlab = "Date", ylab = "Steps", col = "orange", main = "Activities with NAs values")
+    barplot(stepsPerDay$steps, names.arg = stepsPerDay$date, xlab = "Date"
+            , ylab = "Steps", col = "orange"
+            , main = "Activities with NA values")
     
-    stepsPerDay.noNA <- aggregate(steps ~ date, data = activity.noNA, sum, na.rm = TRUE)
+    stepsPerDay.noNA <- aggregate(steps ~ date, data = activity.noNA, sum
+                                  , na.rm = TRUE)
     stepsPerDay.noNA$date <- as.Date(stepsPerDay.noNA$date)
-    barplot(stepsPerDay.noNA$steps, names.arg = stepsPerDay.noNA$date, xlab = "Date", ylab = "Steps", col = "orange", main = "Activities w/o NAs values")
+    barplot(stepsPerDay.noNA$steps, names.arg = stepsPerDay.noNA$date
+            , xlab = "Date", ylab = "Steps"
+            , col = "orange", main = "Activities w/o NA values")
     ```
 
 - **Mean:**
@@ -150,8 +161,12 @@ par(mfrow = c(1,1))
 2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). 
 
     ```{r fig.width = 10, fig.height = 5}
-    stepsPerInterval.wkd <- aggregate(steps ~ interval + type, data = activity.wkd, mean, na.rm=TRUE)
-    qplot(interval, steps, data = stepsPerInterval.wkd, facets = type ~ ., geom = "line", color = type)
+    stepsPerInterval.wkd <- aggregate(steps ~ interval + type
+                                      , data = activity.wkd
+                                      , mean
+                                      , na.rm=TRUE)
+    qplot(interval, steps, data = stepsPerInterval.wkd
+          , facets = type ~ ., geom = "line", color = type)
     ```
 
 
